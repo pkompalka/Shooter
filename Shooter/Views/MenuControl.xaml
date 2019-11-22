@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="Shooter.Views.MenuControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+             xmlns:local="clr-namespace:Shooter.Views"
+             xmlns:local1="clr-namespace:Shooter"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance viewModels:MenuViewModel}"
+             x:Name="MenuWindow"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Storyboard x:Key="exitRot">
+        <DoubleAnimation Storyboard.TargetName="rot" Storyboard.TargetProperty="Angle" BeginTime="0:0:0" Duration="0:0:10" From="0" To="360" AutoReverse="False" RepeatBehavior="Forever"/>
+    </Storyboard>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Text="Shooter" FontSize="50" Foreground="Aqua" HorizontalAlignment="Center"/>
+
+        <Button Grid.Column="1" Grid.Row="1" Width="150" Height="60" Content="Start" Background="Green" BorderBrush="Black" BorderThickness="3" FontSize="20" Foreground="Black" Command="{Binding ButtonStart}" CommandParameter="{Binding ElementName=MenuWindow}"/>
+        <Button Grid.Column="1" Grid.Row="2" Width="150" Height="60" Content="Scores" Background="SeaShell" BorderBrush="Black" BorderThickness="3" FontSize="20" Foreground="Black" Command="{Binding ButtonScores}"/>
+        <Button Grid.Column="1" Grid.Row="3" Width="70" Height="70" Background="Black" FontSize="20" Foreground="Red" Command="{Binding ButtonClose}" CommandParameter="{Binding ElementName=MenuWindow}" Style="{StaticResource MetroCircleButtonStyle}">
+            <Rectangle Width="50" Height="50" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                <Rectangle.OpacityMask>
+                    <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_close}"/>
+                </Rectangle.OpacityMask>
+            </Rectangle>
+            <Button.LayoutTransform>
+                <RotateTransform x:Name="rot" Angle="0"/>
+            </Button.LayoutTransform>
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="Button.Loaded">
+                    <BeginStoryboard Storyboard="{StaticResource exitRot}"/>
+                </EventTrigger>
+            </Button.Triggers>
+        </Button>
+    </Grid>
+</UserControl>
